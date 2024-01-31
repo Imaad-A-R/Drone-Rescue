@@ -4,7 +4,7 @@
 - Authors:
   - [Imaad, Abdul-Razzak](abdulrai@mcmaster.ca) 
   - [Cemal, Durak](durakc@mcmaster.ca)
-  - [Firstname_3, Lastname_3](macid@mcmaster.ca)
+  - [Marcos, Hernandez-Rivero](hernam10@mcmaster.ca)
 
 ## Product Description
 
