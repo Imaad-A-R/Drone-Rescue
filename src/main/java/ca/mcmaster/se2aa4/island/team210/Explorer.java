@@ -12,6 +12,12 @@ public class Explorer implements IExplorerRaid {
 
     private final Logger logger = LogManager.getLogger();
     int count =0;
+
+    Map mapper = new Map();
+    Navigation decisionMaker = new Navigation();
+
+    Drone ourDrone;
+
     @Override
     public void initialize(String s) {
         logger.info("** Initializing the Exploration Command Center");
@@ -21,6 +27,7 @@ public class Explorer implements IExplorerRaid {
         Integer batteryLevel = info.getInt("budget");
         logger.info("The drone is facing {}", direction);
         logger.info("Battery level is {}", batteryLevel);
+        ourDrone = new Drone(batteryLevel);
     }
 
     @Override
@@ -29,8 +36,23 @@ public class Explorer implements IExplorerRaid {
         if(count==0){
             decision.put("action", "fly");
         }
+        else if(count==1){
+            decision.put("action", "echo");
+            decision.put("parameters", (new JSONObject()).put("direction", "S"));
+        }
+        else if(count==2){
+            decision.put("action", "echo");
+            decision.put("parameters", (new JSONObject()).put("direction", "N"));
+        }
+        else if(count==3){
+            decision.put("action", "echo");
+            decision.put("parameters", (new JSONObject()).put("direction", "E"));
+        }
+        else if(count<(4+mapper.get_east())){
+            decision.put("action", "fly");
+        }
         else{
-            decision.put("action", "stop"); // we stop the exploration immediately
+            decision.put("action", "stop");
         }
         count++;
         logger.info("** Decision: {}",decision.toString());
@@ -43,10 +65,15 @@ public class Explorer implements IExplorerRaid {
         logger.info("** Response received:\n"+response.toString(2));
         Integer cost = response.getInt("cost");
         logger.info("The cost of the action was {}", cost);
+
+        ourDrone.removeCost(cost);
+        logger.info(ourDrone.getBattery());
+
         String status = response.getString("status");
         logger.info("The status of the drone is {}", status);
         JSONObject extraInfo = response.getJSONObject("extras");
         logger.info("Additional information received: {}", extraInfo);
+        mapper.interpretResults(extraInfo);
     }
 
     @Override
