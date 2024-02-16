@@ -11,7 +11,6 @@ import org.json.JSONTokener;
 public class Explorer implements IExplorerRaid {
 
     private final Logger logger = LogManager.getLogger();
-    int count =0;
 
     Map mapper = new Map();
     Navigation decisionMaker = new Navigation();
@@ -32,29 +31,27 @@ public class Explorer implements IExplorerRaid {
 
     @Override
     public String takeDecision() {
+        String[] givenDecision = decisionMaker.makeADecision(mapper);
         JSONObject decision = new JSONObject();
-        if(count==0){
-            decision.put("action", "fly");
+        switch(givenDecision[0]){
+            case "fly":
+                decision.put("action", "fly");
+                break;
+            case "heading":
+                decision.put("action", "heading");
+                decision.put("parameters", (new JSONObject()).put("direction", givenDecision[1]));
+                break;
+            case "echo":
+                decision.put("action", "echo");
+                decision.put("parameters", (new JSONObject()).put("direction", givenDecision[1]));
+                break;
+            case "scan":
+                decision.put("action", "scan");
+                break;
+            case "stop":
+                decision.put("action", "stop");
+                break;
         }
-        else if(count==1){
-            decision.put("action", "echo");
-            decision.put("parameters", (new JSONObject()).put("direction", "S"));
-        }
-        else if(count==2){
-            decision.put("action", "echo");
-            decision.put("parameters", (new JSONObject()).put("direction", "N"));
-        }
-        else if(count==3){
-            decision.put("action", "echo");
-            decision.put("parameters", (new JSONObject()).put("direction", "E"));
-        }
-        else if(count<(4+mapper.get_east())){
-            decision.put("action", "fly");
-        }
-        else{
-            decision.put("action", "stop");
-        }
-        count++;
         logger.info("** Decision: {}",decision.toString());
         return decision.toString();
     }
