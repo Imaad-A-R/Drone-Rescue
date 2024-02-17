@@ -12,10 +12,9 @@ public class Explorer implements IExplorerRaid {
 
     private final Logger logger = LogManager.getLogger();
 
-    Map mapper = new Map();
+    Map mapper;
     Navigation decisionMaker = new Navigation();
 
-    Drone ourDrone;
 
     @Override
     public void initialize(String s) {
@@ -26,7 +25,7 @@ public class Explorer implements IExplorerRaid {
         Integer batteryLevel = info.getInt("budget");
         logger.info("The drone is facing {}", direction);
         logger.info("Battery level is {}", batteryLevel);
-        ourDrone = new Drone(batteryLevel);
+        mapper = new Map(new Drone(batteryLevel));
     }
 
     @Override
@@ -36,14 +35,17 @@ public class Explorer implements IExplorerRaid {
         switch(givenDecision[0]){
             case "fly":
                 decision.put("action", "fly");
+                mapper.storeDecisionInfo(givenDecision);
                 break;
             case "heading":
                 decision.put("action", "heading");
                 decision.put("parameters", (new JSONObject()).put("direction", givenDecision[1]));
+                mapper.storeDecisionInfo(givenDecision);
                 break;
             case "echo":
                 decision.put("action", "echo");
                 decision.put("parameters", (new JSONObject()).put("direction", givenDecision[1]));
+                mapper.storeDecisionInfo(givenDecision);
                 break;
             case "scan":
                 decision.put("action", "scan");
@@ -63,8 +65,7 @@ public class Explorer implements IExplorerRaid {
         Integer cost = response.getInt("cost");
         logger.info("The cost of the action was {}", cost);
 
-        ourDrone.removeCost(cost);
-        logger.info(ourDrone.getBattery());
+        mapper.applyCost(cost);
 
         String status = response.getString("status");
         logger.info("The status of the drone is {}", status);
