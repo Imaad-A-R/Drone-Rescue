@@ -11,55 +11,55 @@ public class Navigation {
     State currentState;
     int count;
 
-    public String[] makeADecision(Map givenMap) {
-        String[] decisionArray = new String[2];
+    public Decision makeADecision(Map givenMap) {
+        Decision decision = new Decision();
         currentState = State.FIND_ISLAND;
         switch (currentState){
             case FIND_ISLAND:
-                decisionArray = makeADecisionFindIsland(decisionArray, givenMap);
+                decision = makeADecisionFindIsland(decision, givenMap);
                 break;
             case FIND_EMERGENCY:
-                decisionArray = makeADecisionFindEmergency(decisionArray, givenMap);
+                decision = makeADecisionFindEmergency(decision, givenMap);
                 break;
             case FIND_CREEKS:
-                decisionArray = makeADecisionFindCreeks(decisionArray, givenMap);
+                decision = makeADecisionFindCreeks(decision, givenMap);
                 break;
             default:
                 break;
         }
-        return decisionArray;
+        return decision;
     }
 
-    private String[] makeADecisionFindCreeks(String[] decisionArray, Map givenMap) {
-        return decisionArray;
+    private Decision makeADecisionFindCreeks(Decision decision, Map givenMap) {
+        return decision;
     }
 
-    private String[] makeADecisionFindEmergency(String[] decisionArray, Map givenMap) {
-        return decisionArray;
+    private Decision makeADecisionFindEmergency(Decision decision, Map givenMap) {
+        return decision;
     }
 
-    private String[] makeADecisionFindIsland(String[] decisionArray, Map givenMap) {
+    private Decision makeADecisionFindIsland(Decision decision, Map givenMap) {
         if (count == 0){
-            decisionArray[0] = "echo";
-            decisionArray[1] = "S";
+            decision.setAction("echo");
+            decision.setExtra("S");
         }
         else if (count == 1){
-            decisionArray[0] = "echo";
-            decisionArray[1] = "N";
+            decision.setAction("echo");
+            decision.setExtra("N");
         }
         else if (count == 2){
-            decisionArray[0] = "echo";
-            decisionArray[1] = "E";
+            decision.setAction("echo");
+            decision.setExtra("E");
         }
         else if (count < 3 + givenMap.get_east()){
-            decisionArray[0] = "fly";
-            decisionArray[1] = "";
+            decision.setAction("fly");
+            decision.setExtra("");
         }
         else{
-            decisionArray[0] = "stop";
-            decisionArray[1] = "";
+            decision.setAction("stop");
+            decision.setExtra("");
         }
         count++;
-        return decisionArray;
+        return decision;
     }
 }

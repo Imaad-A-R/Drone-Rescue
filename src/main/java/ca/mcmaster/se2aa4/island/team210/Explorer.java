@@ -30,21 +30,21 @@ public class Explorer implements IExplorerRaid {
 
     @Override
     public String takeDecision() {
-        String[] givenDecision = decisionMaker.makeADecision(mapper);
+        Decision givenDecision = decisionMaker.makeADecision(mapper);
         JSONObject decision = new JSONObject();
-        switch(givenDecision[0]){
+        switch(givenDecision.getAction()){
             case "fly":
                 decision.put("action", "fly");
                 mapper.storeDecisionInfo(givenDecision);
                 break;
             case "heading":
                 decision.put("action", "heading");
-                decision.put("parameters", (new JSONObject()).put("direction", givenDecision[1]));
+                decision.put("parameters", (new JSONObject()).put("direction", givenDecision.getExtra()));
                 mapper.storeDecisionInfo(givenDecision);
                 break;
             case "echo":
                 decision.put("action", "echo");
-                decision.put("parameters", (new JSONObject()).put("direction", givenDecision[1]));
+                decision.put("parameters", (new JSONObject()).put("direction", givenDecision.getExtra()));
                 mapper.storeDecisionInfo(givenDecision);
                 break;
             case "scan":

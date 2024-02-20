@@ -27,10 +27,10 @@ public class Map {
         return this.east_end;
     }
 
-    public void storeDecisionInfo(String[] givenDecision) {
-        switch (givenDecision[0]){
+    public void storeDecisionInfo(Decision givenDecision) {
+        switch (givenDecision.getAction()){
             case "heading":
-                ourDrone.handleDirection(givenDecision[1]);
+                ourDrone.handleDirection(givenDecision.getExtra());
                 break;
             case "fly":
                 ourDrone.move();
