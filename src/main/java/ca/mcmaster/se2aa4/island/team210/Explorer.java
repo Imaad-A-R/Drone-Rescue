@@ -72,6 +72,7 @@ public class Explorer implements IExplorerRaid {
         JSONObject extraInfo = response.getJSONObject("extras");
         logger.info("Additional information received: {}", extraInfo);
         mapper.interpretResults(extraInfo);
+        logger.info(mapper.ourDrone.getBattery());
     }
 
     @Override

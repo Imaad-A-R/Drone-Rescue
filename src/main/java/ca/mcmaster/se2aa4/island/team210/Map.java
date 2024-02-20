@@ -9,7 +9,12 @@ import org.json.JSONObject;
 
 public class Map {
 
-    Integer east_end;
+    DirectionInfo east = new DirectionInfo();
+    DirectionInfo west = new DirectionInfo();
+    DirectionInfo north = new DirectionInfo();
+    DirectionInfo south = new DirectionInfo();
+
+    private String last_echo;
 
     private final Logger logger = LogManager.getLogger();
 
@@ -20,11 +25,21 @@ public class Map {
 
     public void interpretResults(JSONObject info){
         if (info.has("range")){
-            east_end = info.getInt("range");
+            switch (last_echo){
+                case "N":
+                    north.setInfo(info);
+                    break;
+                case "E":
+                    east.setInfo(info);
+                    break;
+                case "S":
+                    south.setInfo(info);
+                    break;
+                case "W":
+                    west.setInfo(info);
+                    break;
+            }
         }
-    }
-    public Integer get_east(){
-        return this.east_end;
     }
 
     public void storeDecisionInfo(Decision givenDecision) {
@@ -34,6 +49,9 @@ public class Map {
                 break;
             case "fly":
                 ourDrone.move();
+                break;
+            case "echo":
+                last_echo = givenDecision.getExtra();
                 break;
         }
     }

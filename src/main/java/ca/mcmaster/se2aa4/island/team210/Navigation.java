@@ -9,7 +9,7 @@ public class Navigation {
     }
 
     State currentState;
-    int count;
+    int count=0;
 
     public Decision makeADecision(Map givenMap) {
         Decision decision = new Decision();
@@ -51,7 +51,7 @@ public class Navigation {
             decision.setAction("echo");
             decision.setExtra("E");
         }
-        else if (count < 3 + givenMap.get_east()){
+        else if (count < 3 + givenMap.east.getRange()){
             decision.setAction("fly");
             decision.setExtra("");
         }
