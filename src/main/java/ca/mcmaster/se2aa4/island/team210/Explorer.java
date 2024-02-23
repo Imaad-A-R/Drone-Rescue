@@ -25,7 +25,7 @@ public class Explorer implements IExplorerRaid {
         Integer batteryLevel = info.getInt("budget");
         logger.info("The drone is facing {}", direction);
         logger.info("Battery level is {}", batteryLevel);
-        mapper = new Map(new Drone(batteryLevel));
+        mapper = new Map(new Drone(batteryLevel, direction));
     }
 
     @Override

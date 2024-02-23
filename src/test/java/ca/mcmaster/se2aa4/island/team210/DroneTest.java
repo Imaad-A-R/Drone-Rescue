@@ -8,7 +8,7 @@ import static org.junit.Assert.assertEquals;
 
 public class DroneTest {
 
-    private Drone aDrone = new Drone(7000);
+    private Drone aDrone = new Drone(7000, "E");
 
     @Test
     public void removeBattery(){
