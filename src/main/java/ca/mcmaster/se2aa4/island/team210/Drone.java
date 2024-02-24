@@ -12,10 +12,25 @@ public class Drone {
     }
     Integer x=0;
     Integer y=0;
-    direction current_direction = direction.E;
-    public Drone(Integer batteryLevel){
+    direction current_direction;
+    public Drone(Integer batteryLevel, String initial_direction){
         this.battery = batteryLevel;
+        switch (initial_direction){
+            case "E":
+                current_direction = direction.E;
+                break;
+            case "N":
+                current_direction = direction.N;
+                break;
+            case "S":
+                current_direction = direction.S;
+                break;
+            case "W":
+                current_direction = direction.W;
+                break;
+        }
     }
+
 
     public void removeCost(Integer cost) {
         battery -= cost;
