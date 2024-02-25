@@ -59,4 +59,7 @@ public class Map {
     public void applyCost(Integer cost) {
         ourDrone.removeCost(cost);
     }
+
+    public String getDirection() { return ourDrone.getDirection();
+    }
 }

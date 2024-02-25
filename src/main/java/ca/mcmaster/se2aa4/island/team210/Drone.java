@@ -67,6 +67,10 @@ public class Drone {
                 break;
         }
     }
+    public boolean canDoAction(Decision d, String direction){
+        return true;
+    }
+    public String getDirection() { return current_direction.toString(); }
     public int getBattery(){
         return battery;
     }

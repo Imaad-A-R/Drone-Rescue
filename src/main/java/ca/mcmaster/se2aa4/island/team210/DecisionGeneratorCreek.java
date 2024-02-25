@@ -4,4 +4,12 @@ public class DecisionGeneratorCreek implements DecisionGenerator {
     public Decision decidingAlgorithm(Decision decision, Map givenMap){
         return decision;
     }
+
+    public String getState(){
+        return "";
+    }
+
+    enum state{
+
+    }
 }
