@@ -13,22 +13,11 @@ public class Drone {
     Integer x=0;
     Integer y=0;
     direction current_direction;
+    direction right;
+    direction left;
     public Drone(Integer batteryLevel, String initial_direction){
         this.battery = batteryLevel;
-        switch (initial_direction){
-            case "E":
-                current_direction = direction.E;
-                break;
-            case "N":
-                current_direction = direction.N;
-                break;
-            case "S":
-                current_direction = direction.S;
-                break;
-            case "W":
-                current_direction = direction.W;
-                break;
-        }
+        handleDirection(initial_direction);
     }
 
 
@@ -53,17 +42,25 @@ public class Drone {
     }
     public void handleDirection(String newDir){
         switch (newDir){
+            case "E":
+                current_direction = direction.E;
+                right = direction.S;
+                left = direction.N;
+                break;
             case "N":
                 current_direction = direction.N;
+                right = direction.E;
+                left = direction.W;
                 break;
             case "S":
                 current_direction = direction.S;
-                break;
-            case "E":
-                current_direction = direction.E;
+                right = direction.W;
+                left = direction.E;
                 break;
             case "W":
                 current_direction = direction.W;
+                right = direction.N;
+                left = direction.S;
                 break;
         }
     }
