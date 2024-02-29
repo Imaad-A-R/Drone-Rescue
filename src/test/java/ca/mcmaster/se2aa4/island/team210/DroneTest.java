@@ -17,6 +17,7 @@ public class DroneTest {
         aDrone.removeCost(87);
         assertEquals(6859, aDrone.getBattery());
     }
+
     @Test
     public void handleDirectionTest(){
         aDrone.handleDirection("N");
