@@ -19,8 +19,4 @@ class DecisionTest {
         assertEquals("", aDecision.getExtra());
     }
 
-    @Test void extraDecisionTest(){
-
-    }
-
 }
