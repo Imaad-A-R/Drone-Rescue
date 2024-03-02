@@ -109,4 +109,11 @@ public class Map {
 
     public String getDirection() { return ourDrone.getDirection();
     }
+
+    public String getRight(){
+        return ourDrone.right.toString();
+    }
+    public String getLeft(){
+        return ourDrone.left.toString();
+    }
 }
