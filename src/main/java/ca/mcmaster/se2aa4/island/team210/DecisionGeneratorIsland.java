@@ -32,7 +32,7 @@ public class DecisionGeneratorIsland implements DecisionGenerator {
                 }
                 break;
             case SEARCH:
-                if (counter%(givenMap.getRange("current")/10)!=0){
+                if (counter%(givenMap.getRange("current")/20)!=0){
                     decision.setAction("fly");
                     decision.setExtra("");
                     counter++;
