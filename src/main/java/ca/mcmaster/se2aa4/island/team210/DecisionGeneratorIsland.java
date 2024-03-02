@@ -99,7 +99,7 @@ public class DecisionGeneratorIsland implements DecisionGenerator {
                 }
                 break;
             case NAVIGATE:
-                if (naviCounter >= givenMap.getRange("current")){
+                if (naviCounter-1 >= givenMap.getRange("current")){
                     canSwitch=true;
                 }
                 break;
