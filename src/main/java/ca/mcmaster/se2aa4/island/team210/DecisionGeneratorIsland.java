@@ -27,7 +27,7 @@ public class DecisionGeneratorIsland implements DecisionGenerator {
                 }
                 break;
             case SEARCH:
-                if (givenMap.east.getRange() > 3){
+                if (givenMap.getRange("current") > 3){
                     decision.setAction("fly");
                     decision.setExtra("");
                 }
@@ -60,7 +60,7 @@ public class DecisionGeneratorIsland implements DecisionGenerator {
                 canSwitch = true;
                 break;
             case SEARCH:
-                if (counter >= givenMap.east.getRange()){
+                if (counter >= givenMap.getRange("current")){
                     canSwitch = true;
                 }
                 break;

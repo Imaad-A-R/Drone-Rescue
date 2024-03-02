@@ -6,20 +6,20 @@ import org.json.JSONObject;
 
 public class DirectionInfo {
     private Integer range;
-    private String echo_type;
+    private String echoType;
     DirectionInfo(){
         range = 0;
-        echo_type = "";
+        echoType = "";
     }
 
     public void setInfo(JSONObject info){
         range = info.getInt("range");
-        echo_type = info.getString("found");
+        echoType = info.getString("found");
     }
     public Integer getRange(){
         return range;
     }
-    public String getEcho_type(){
-        return echo_type;
+    public String getEchoType(){
+        return echoType;
     }
 }

@@ -9,10 +9,10 @@ import org.json.JSONObject;
 
 public class Map {
 
-    DirectionInfo east = new DirectionInfo();
-    DirectionInfo west = new DirectionInfo();
-    DirectionInfo north = new DirectionInfo();
-    DirectionInfo south = new DirectionInfo();
+    private DirectionInfo east = new DirectionInfo();
+    private DirectionInfo west = new DirectionInfo();
+    private DirectionInfo north = new DirectionInfo();
+    private DirectionInfo south = new DirectionInfo();
 
     private String last_echo;
 
@@ -38,6 +38,8 @@ public class Map {
                 case "W":
                     west.setInfo(info);
                     break;
+                default:
+                    break;
             }
         }
     }
@@ -53,6 +55,51 @@ public class Map {
             case "echo":
                 last_echo = givenDecision.getExtra();
                 break;
+        }
+    }
+
+    public Integer getRange(String orientation){
+        String direc = returnDirection(orientation);
+        switch (direc){
+            case "N":
+                return north.getRange();
+            case "E":
+                return east.getRange();
+            case "S":
+                return south.getRange();
+            case "W":
+                return west.getRange();
+            default:
+                return 0;
+        }
+    }
+
+    public String getEchoType(String orientation){
+        String direc = returnDirection(orientation);
+        switch (direc){
+            case "N":
+                return north.getEchoType();
+            case "E":
+                return east.getEchoType();
+            case "S":
+                return south.getEchoType();
+            case "W":
+                return west.getEchoType();
+            default:
+                return "";
+        }
+    }
+
+    public String returnDirection(String orientation){
+        switch (orientation){
+            case "current":
+                return ourDrone.current_direction.toString();
+            case "right":
+                return ourDrone.right.toString();
+            case "left":
+                return ourDrone.left.toString();
+            default:
+                return "";
         }
     }
 
