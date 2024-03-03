@@ -1,8 +1,6 @@
 package ca.mcmaster.se2aa4.island.team210;
 
 import java.util.*;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 public class DecisionGeneratorIsland implements DecisionGenerator {
 
@@ -11,19 +9,14 @@ public class DecisionGeneratorIsland implements DecisionGenerator {
         SEARCH,
         NAVIGATE,
         DONE,
-        STOP
     }
-    private int counter;
     private state current_state;
-
-    private final Logger logger = LogManager.getLogger();
 
     Queue<Decision> decQueue;
 
     public DecisionGeneratorIsland(){
 
         current_state = state.START;
-        counter = 0;
         decQueue = new LinkedList<>();
     }
 
@@ -116,7 +109,6 @@ public class DecisionGeneratorIsland implements DecisionGenerator {
                 decQueue.add(decstop);
                 break;
         }
-        counter ++;
         return decQueue.remove();
 
     }
@@ -152,9 +144,6 @@ public class DecisionGeneratorIsland implements DecisionGenerator {
                 switchStates(state.DONE);
                 break;
             case DONE:
-                canSwitch=true;
-                break;
-            case STOP:
                 break;
         }
     }
