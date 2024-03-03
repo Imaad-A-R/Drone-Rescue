@@ -10,10 +10,12 @@ public class DecisionGeneratorIsland implements DecisionGenerator {
         START,
         SEARCH,
         NAVIGATE,
-        DONE
+        DONE,
+        STOP
     }
     private int counter;
     private state current_state;
+
     private final Logger logger = LogManager.getLogger();
 
     Queue<Decision> decQueue;
@@ -25,6 +27,7 @@ public class DecisionGeneratorIsland implements DecisionGenerator {
         decQueue = new LinkedList<>();
     }
 
+
     public Decision decidingAlgorithm(Map givenMap){
         Decision decision = new Decision();
         if (!decQueue.isEmpty()){
@@ -34,6 +37,7 @@ public class DecisionGeneratorIsland implements DecisionGenerator {
             case START:
                 decision.setAction("echo");
                 decision.setExtra(givenMap.getDirection());
+
                 decQueue.add(decision);
                 Decision decision2 = new Decision();
                 decision2.setAction("echo");
@@ -63,6 +67,7 @@ public class DecisionGeneratorIsland implements DecisionGenerator {
                 decQueue.add(decision5);
                 break;
             case NAVIGATE:
+
                 if (givenMap.getEchoType("left").equals("GROUND")) {
                     Decision decision6 = new Decision();
                     decision6.setAction("heading");
@@ -113,6 +118,7 @@ public class DecisionGeneratorIsland implements DecisionGenerator {
         }
         counter ++;
         return decQueue.remove();
+
     }
 
     private void canSwitchStates(Map givenMap) {
@@ -132,6 +138,7 @@ public class DecisionGeneratorIsland implements DecisionGenerator {
                 }
                 break;
             case SEARCH:
+
                 if (!givenMap.getEchoType("right").equals("OUT_OF_RANGE")) {
                     switchStates(state.NAVIGATE);
                     decQueue.clear();
@@ -145,6 +152,9 @@ public class DecisionGeneratorIsland implements DecisionGenerator {
                 switchStates(state.DONE);
                 break;
             case DONE:
+                canSwitch=true;
+                break;
+            case STOP:
                 break;
         }
     }
