@@ -17,22 +17,22 @@ public class Navigation {
     public Decision makeADecision(Map givenMap) {
         Decision decision = new Decision();
         currentState = State.FIND_ISLAND;
-        switch (currentState){
+        switch (currentState) {
             case FIND_ISLAND:
-                decision = findIsland.decidingAlgorithm(decision, givenMap);
-                if (findIsland.getState().equals("DONE")){
+                decision = findIsland.decidingAlgorithm(givenMap);
+                if (findIsland.getState().equals("DONE")) {
                     moveToNextState();
                 }
                 break;
             case FIND_EMERGENCY:
-                decision = findEmergency.decidingAlgorithm(decision, givenMap);
-                if (findEmergency.getState().equals("DONE")){
+                decision = findEmergency.decidingAlgorithm(givenMap);
+                if (findEmergency.getState().equals("DONE")) {
                     moveToNextState();
                 }
                 break;
             case FIND_CREEKS:
-                decision = findCreeks.decidingAlgorithm(decision, givenMap);
-                if (findCreeks.getState().equals("DONE")){
+                decision = findCreeks.decidingAlgorithm(givenMap);
+                if (findCreeks.getState().equals("DONE")) {
                     moveToNextState();
                 }
                 break;
