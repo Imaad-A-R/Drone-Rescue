@@ -116,4 +116,11 @@ public class Map {
     public String getLeft(){
         return ourDrone.left.toString();
     }
+    public void setDroneStartingTurn(String dir){
+        ourDrone.setStartingTurn(dir);
+    }
+
+    public String getBehind() {
+        return ourDrone.behind.toString();
+    }
 }

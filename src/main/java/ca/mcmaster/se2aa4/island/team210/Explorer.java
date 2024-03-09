@@ -14,6 +14,7 @@ public class Explorer implements IExplorerRaid {
 
     Map mapper;
     Navigation decisionMaker = new Navigation();
+    ScanInfo scanInfo = new ScanInfo();
 
 
     @Override
@@ -68,11 +69,11 @@ public class Explorer implements IExplorerRaid {
         logger.info("The cost of the action was {}", cost);
 
         mapper.applyCost(cost);
-
         String status = response.getString("status");
         logger.info("The status of the drone is {}", status);
         JSONObject extraInfo = response.getJSONObject("extras");
         logger.info("Additional information received: {}", extraInfo);
+        ScanInfo.interpretResults(extraInfo);
         mapper.interpretResults(extraInfo);
         logger.info(mapper.ourDrone.getBattery());
     }

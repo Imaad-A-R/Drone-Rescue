@@ -15,6 +15,8 @@ public class Drone {
     direction current_direction;
     direction right;
     direction left;
+    direction behind;
+    String starting_turn;
     public Drone(Integer batteryLevel, String initial_direction){
         this.battery = batteryLevel;
         handleDirection(initial_direction);
@@ -46,29 +48,33 @@ public class Drone {
                 current_direction = direction.E;
                 right = direction.S;
                 left = direction.N;
+                behind = direction.W;
                 break;
             case "N":
                 current_direction = direction.N;
                 right = direction.E;
                 left = direction.W;
+                behind = direction.S;
                 break;
             case "S":
                 current_direction = direction.S;
                 right = direction.W;
                 left = direction.E;
+                behind = direction.N;
                 break;
             case "W":
                 current_direction = direction.W;
                 right = direction.N;
                 left = direction.S;
+                behind = direction.E;
                 break;
         }
-    }
-    public boolean canDoAction(Decision d, String direction){
-        return true;
     }
     public String getDirection() { return current_direction.toString(); }
     public int getBattery(){
         return battery;
+    }
+    public void setStartingTurn(String dir){
+        starting_turn = dir;
     }
 }

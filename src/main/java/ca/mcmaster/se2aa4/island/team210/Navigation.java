@@ -5,14 +5,12 @@ public class Navigation {
     enum State{
         FIND_ISLAND,
         FIND_EMERGENCY,
-        FIND_CREEKS,
         DONE
     }
 
     State currentState;
     DecisionGenerator findIsland = new DecisionGeneratorIsland();
     DecisionGenerator findEmergency = new DecisionGeneratorEmergency();
-    DecisionGenerator findCreeks = new DecisionGeneratorCreek();
 
     public Decision makeADecision(Map givenMap) {
         Decision decision = new Decision();
@@ -30,12 +28,6 @@ public class Navigation {
                     moveToNextState();
                 }
                 break;
-            case FIND_CREEKS:
-                decision = findCreeks.decidingAlgorithm(givenMap);
-                if (findCreeks.getState().equals("DONE")) {
-                    moveToNextState();
-                }
-                break;
             default:
                 break;
         }
@@ -48,9 +40,6 @@ public class Navigation {
                 currentState = State.FIND_EMERGENCY;
                 break;
             case FIND_EMERGENCY:
-                currentState = State.FIND_CREEKS;
-                break;
-            case FIND_CREEKS:
                 currentState = State.DONE;
                 break;
             case DONE:
