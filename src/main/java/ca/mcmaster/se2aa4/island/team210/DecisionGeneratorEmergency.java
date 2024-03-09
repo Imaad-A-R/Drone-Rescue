@@ -20,6 +20,9 @@ public class DecisionGeneratorEmergency implements DecisionGenerator {
         current_state = state.SEARCHING;
     }
     public Decision decidingAlgorithm(Map givenMap){
+        if (!decQueue.isEmpty()){
+            return decQueue.remove();
+        }
         switch (current_state){
             case SEARCHING:
                 decQueue.add(new Decision("fly"));
