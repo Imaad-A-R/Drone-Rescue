@@ -22,91 +22,51 @@ public class DecisionGeneratorIsland implements DecisionGenerator {
 
 
     public Decision decidingAlgorithm(Map givenMap){
-        Decision decision = new Decision();
         if (!decQueue.isEmpty()){
             return decQueue.remove();
         }
         switch (current_state){
             case START:
-                decision.setAction("echo");
-                decision.setExtra(givenMap.getDirection());
-
-                decQueue.add(decision);
-                Decision decision2 = new Decision();
-                decision2.setAction("echo");
-                decision2.setExtra(givenMap.getLeft());
-                decQueue.add(decision2);
-                Decision decision3 = new Decision();
-                decision3.setAction("echo");
-                decision3.setExtra(givenMap.getRight());
-                decQueue.add(decision3);
+                decQueue.add(new Decision("echo", givenMap.getDirection()));
+                decQueue.add(new Decision("echo", givenMap.getRight()));
+                decQueue.add(new Decision("echo", givenMap.getLeft()));
                 canSwitchStates(givenMap);
                 break;
             case SEARCH:
                 canSwitchStates(givenMap);
                 for (int i = 0; i < 3; i++){
-                    Decision dec = new Decision();
-                    dec.setAction("fly");
-                    dec.setExtra("");
-                    decQueue.add(dec);
+                    decQueue.add(new Decision("fly"));
                 }
-                Decision decision4 = new Decision();
-                decision4.setAction("echo");
-                decision4.setExtra(givenMap.getLeft());
-                decQueue.add(decision4);
-                Decision decision5 = new Decision();
-                decision5.setAction("echo");
-                decision5.setExtra(givenMap.getRight());
-                decQueue.add(decision5);
+                decQueue.add(new Decision("echo", givenMap.getLeft()));
+                decQueue.add(new Decision("echo", givenMap.getRight()));
                 break;
             case NAVIGATE:
 
                 if (givenMap.getEchoType("left").equals("GROUND")) {
-                    Decision decision6 = new Decision();
-                    decision6.setAction("heading");
-                    decision6.setExtra(givenMap.getLeft());
-                    decQueue.add(decision6);
+                    decQueue.add(new Decision("heading", givenMap.getLeft()));
 
                     for (int i = 0; i < givenMap.getRange("left") - 1; i++){
-                        Decision decl = new Decision();
-                        decl.setAction("fly");
-                        decl.setExtra("");
-                        decQueue.add(decl);
+                        decQueue.add(new Decision("fly"));
                     }
                 }
                 else if (givenMap.getEchoType("right").equals("GROUND")){
-                    Decision decision7 = new Decision();
-                    decision7.setAction("heading");
-                    decision7.setExtra(givenMap.getRight());
-                    decQueue.add(decision7);
+                    decQueue.add(new Decision("heading", givenMap.getRight()));
 
                     for (int i = 0; i < givenMap.getRange("right") - 1; i++){
-                        Decision decl = new Decision();
-                        decl.setAction("fly");
-                        decl.setExtra("");
-                        decQueue.add(decl);
+                        decQueue.add(new Decision("fly"));
                     }
                 }
                 else{
                     for (int i = 0; i < givenMap.getRange("current"); i++){
-                        Decision decf = new Decision();
-                        decf.setAction("fly");
-                        decf.setExtra("");
-                        decQueue.add(decf);
+                        decQueue.add(new Decision("fly"));
                     }
                 }
 
-                Decision decs = new Decision();
-                decs.setAction("scan");
-                decs.setExtra("");
-                decQueue.add(decs);
+                decQueue.add(new Decision("scan"));
                 canSwitchStates(givenMap);
                 break;
             case DONE:
-                Decision decstop = new Decision();
-                decstop.setAction("stop");
-                decstop.setExtra("");
-                decQueue.add(decstop);
+                decQueue.add(new Decision("stop"));
                 break;
         }
         return decQueue.remove();
