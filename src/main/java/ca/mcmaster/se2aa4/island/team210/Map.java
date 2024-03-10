@@ -2,9 +2,10 @@ package ca.mcmaster.se2aa4.island.team210;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
-
+import java.util.List;
 
 
 public class Map {
@@ -13,7 +14,7 @@ public class Map {
     private DirectionInfo west = new DirectionInfo();
     private DirectionInfo north = new DirectionInfo();
     private DirectionInfo south = new DirectionInfo();
-
+    public boolean overOcean;
     private String last_echo;
 
     private final Logger logger = LogManager.getLogger();
@@ -51,9 +52,12 @@ public class Map {
                 break;
             case "fly":
                 ourDrone.move();
+
                 break;
             case "echo":
                 last_echo = givenDecision.getExtra();
+                break;
+            default:
                 break;
         }
     }
@@ -122,5 +126,11 @@ public class Map {
 
     public String getBehind() {
         return ourDrone.behind.toString();
+    }
+
+    public void isOcean(JSONArray biomes) {
+        if (biomes.length()==1 && biomes.get(0).toString().equals("OCEAN")){
+            overOcean = true;
+        }
     }
 }
