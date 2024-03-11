@@ -35,7 +35,7 @@ public class DecisionGeneratorEmergency implements DecisionGenerator {
     private void canSwitchStates(Map givenMap) {
         switch (current_state){
             case SEARCHING:
-                //if (ScanInfo shows pure ocean){
+                //if (mapper.overOcean==true){
                 if (true){
                     decQueue.add(new Decision("echo", givenMap.getDirection()));
                     switchStates(state.TURNING);

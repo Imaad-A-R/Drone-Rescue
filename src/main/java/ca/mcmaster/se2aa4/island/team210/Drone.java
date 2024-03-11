@@ -1,8 +1,10 @@
 package ca.mcmaster.se2aa4.island.team210;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Drone {
     int battery;
-
 
     enum direction {
         N,
@@ -71,6 +73,12 @@ public class Drone {
         }
     }
     public String getDirection() { return current_direction.toString(); }
+    public Integer[] getCoordinates() {
+        Integer [] Coords = new Integer[2];
+        Coords[0]=x;
+        Coords[1]=y;
+        return Coords;
+    }
     public int getBattery(){
         return battery;
     }

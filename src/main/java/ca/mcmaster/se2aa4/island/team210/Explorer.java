@@ -1,6 +1,9 @@
 package ca.mcmaster.se2aa4.island.team210;
 
 import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -67,14 +70,20 @@ public class Explorer implements IExplorerRaid {
         logger.info("** Response received:\n"+response.toString(2));
         Integer cost = response.getInt("cost");
         logger.info("The cost of the action was {}", cost);
-
         mapper.applyCost(cost);
+
         String status = response.getString("status");
         logger.info("The status of the drone is {}", status);
+
         JSONObject extraInfo = response.getJSONObject("extras");
         logger.info("Additional information received: {}", extraInfo);
-        //ScanInfo.interpretResults(extraInfo);
         mapper.interpretResults(extraInfo);
+
+        Integer [] currentCoords = mapper.ourDrone.getCoordinates();
+        scanInfo.interpretResults(currentCoords, extraInfo);
+        if (extraInfo.has("biomes")){
+            mapper.isOcean(extraInfo.getJSONArray("biomes"));
+        }
         logger.info(mapper.ourDrone.getBattery());
     }
 
