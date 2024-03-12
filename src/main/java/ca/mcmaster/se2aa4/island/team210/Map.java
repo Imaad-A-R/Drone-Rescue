@@ -129,7 +129,7 @@ public class Map {
     }
 
     public void isOcean(JSONArray biomes) {
-        if (biomes.length()==1 && biomes.get(0).toString().equals("OCEAN")){
+        if (biomes.length()==1 && biomes.getString(0).equals("OCEAN")){
             overOcean = true;
         }
     }

@@ -1,5 +1,6 @@
 package ca.mcmaster.se2aa4.island.team210;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -12,20 +13,20 @@ public class ScanInfo {
 
     public void interpretResults(Integer[] currentCoords, JSONObject extraInfo) {
         if(extraInfo.has("biomes")){
-            checkCreeks(extraInfo.getJSONArray("creeks").toString(), currentCoords);
-            setSite(extraInfo.getJSONArray("sites").toString(), currentCoords);
+            checkCreeks(extraInfo.getJSONArray("creeks"), currentCoords);
+            setSite(extraInfo.getJSONArray("sites"), currentCoords);
         }
     }
 
-    private void setSite(String sites, Integer[] currentCoords) {
+    private void setSite(JSONArray sites, Integer[] currentCoords) {
         if (!sites.isEmpty()){
-            emergencySite = new POI(currentCoords);
+            emergencySite = new POI(currentCoords, sites.getString(0));
         }
     }
 
-    private void checkCreeks(String creeks, Integer[] currentCoords) {
+    private void checkCreeks(JSONArray creeks, Integer[] currentCoords) {
         if (!creeks.isEmpty()){
-            POI newCreek = new POI(currentCoords);
+            POI newCreek = new POI(currentCoords, creeks.getString(0));
             creekList.add(newCreek);
         }
     }
