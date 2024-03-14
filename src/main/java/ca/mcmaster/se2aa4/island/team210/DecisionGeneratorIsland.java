@@ -8,6 +8,7 @@ public class DecisionGeneratorIsland implements DecisionGenerator {
         START,
         SEARCH,
         NAVIGATE,
+        LOOPING,
         DONE,
     }
     private state current_state;
@@ -34,17 +35,21 @@ public class DecisionGeneratorIsland implements DecisionGenerator {
                 break;
             case SEARCH:
                 canSwitchStates(givenMap);
-                decQueue.add(new Decision("fly"));
+                if (current_state.equals(state.NAVIGATE)){
+                    decQueue.add(new Decision("scan"));
+                }
+                else {
+                    decQueue.add(new Decision("fly"));
                 /*
                 for (int i = 0; i < 3; i++){
                     decQueue.add(new Decision("fly"));
                 }
                 */
-                decQueue.add(new Decision("echo", givenMap.getLeft()));
-                decQueue.add(new Decision("echo", givenMap.getRight()));
+                    decQueue.add(new Decision("echo", givenMap.getLeft()));
+                    decQueue.add(new Decision("echo", givenMap.getRight()));
+                }
                 break;
             case NAVIGATE:
-
                 if (givenMap.getEchoType("left").equals("GROUND")) {
                     decQueue.add(new Decision("heading", givenMap.getLeft()));
                     givenMap.setDroneStartingTurn("left");
@@ -70,8 +75,11 @@ public class DecisionGeneratorIsland implements DecisionGenerator {
                 decQueue.add(new Decision("scan"));
                 canSwitchStates(givenMap);
                 break;
+            case LOOPING:
+                canSwitchStates(givenMap);
+                decQueue.add(new Decision("scan"));
+                break;
             case DONE:
-                decQueue.add(new Decision("stop"));
                 break;
         }
         return decQueue.remove();
@@ -95,7 +103,6 @@ public class DecisionGeneratorIsland implements DecisionGenerator {
                 }
                 break;
             case SEARCH:
-
                 if (!givenMap.getEchoType("right").equals("OUT_OF_RANGE")) {
                     switchStates(state.NAVIGATE);
                     decQueue.clear();
@@ -103,11 +110,15 @@ public class DecisionGeneratorIsland implements DecisionGenerator {
                 else if (!givenMap.getEchoType("left").equals("OUT_OF_RANGE")) {
                     switchStates(state.NAVIGATE);
                     decQueue.clear();
-                 }
+                }
                 break;
             case NAVIGATE:
-                switchStates(state.DONE);
+                switchStates(state.LOOPING);
                 break;
+            case LOOPING:
+                if (decQueue.isEmpty()) {
+                    switchStates(state.DONE);
+                }
             case DONE:
                 break;
         }

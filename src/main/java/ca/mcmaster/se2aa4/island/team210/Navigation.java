@@ -12,9 +12,12 @@ public class Navigation {
     DecisionGenerator findIsland = new DecisionGeneratorIsland();
     DecisionGenerator findEmergency = new DecisionGeneratorEmergency();
 
+    Navigation(){
+        currentState = State.FIND_ISLAND;
+    }
+
     public Decision makeADecision(Map givenMap) {
         Decision decision = new Decision();
-        currentState = State.FIND_ISLAND;
         switch (currentState) {
             case FIND_ISLAND:
                 decision = findIsland.decidingAlgorithm(givenMap);
