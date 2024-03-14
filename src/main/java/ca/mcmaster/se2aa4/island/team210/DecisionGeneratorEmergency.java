@@ -25,9 +25,11 @@ public class DecisionGeneratorEmergency implements DecisionGenerator {
         }
         switch (current_state){
             case SEARCHING:
+                decQueue.add(new Decision("stop"));
                 decQueue.add(new Decision("fly"));
                 decQueue.add(new Decision("scan"));
                 canSwitchStates(givenMap);
+                break;
         }
         return decQueue.remove();
     }
