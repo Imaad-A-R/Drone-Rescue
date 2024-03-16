@@ -25,9 +25,11 @@ public class DecisionGeneratorEmergency implements DecisionGenerator {
         }
         switch (current_state){
             case SEARCHING:
-                decQueue.add(new Decision("stop"));
                 decQueue.add(new Decision("fly"));
                 decQueue.add(new Decision("scan"));
+                canSwitchStates(givenMap);
+                break;
+            case TURNING:
                 canSwitchStates(givenMap);
                 break;
         }
@@ -35,10 +37,13 @@ public class DecisionGeneratorEmergency implements DecisionGenerator {
     }
 
     private void canSwitchStates(Map givenMap) {
+        if(givenMap.ourDrone.battery<4000){
+            decQueue.add(new Decision("stop"));
+        }
         switch (current_state){
             case SEARCHING:
-                //if (mapper.overOcean==true){
-                if (true){
+                if (givenMap.overOcean){
+                    decQueue.clear();
                     decQueue.add(new Decision("echo", givenMap.getDirection()));
                     switchStates(state.TURNING);
                 }
@@ -46,17 +51,27 @@ public class DecisionGeneratorEmergency implements DecisionGenerator {
             case TURNING:
                 if (givenMap.getEchoType("current").equals("OUT_OF_RANGE")){
                     //turn in correct direction;
-                    decQueue.add(new Decision("heading", turnDirection));
+                    if (givenMap.getStartingTurn().equals("left")){
+                        decQueue.add(new Decision("heading", givenMap.getRight()));
+                        givenMap.setDroneStartingTurn("right");
+                    }
+                    else{
+                        decQueue.add(new Decision("heading", givenMap.getLeft()));
+                        givenMap.setDroneStartingTurn("left");
+                    }
+
                     decQueue.add(new Decision("heading", givenMap.getBehind()));
+                    decQueue.add(new Decision("scan"));
+                    decQueue.add(new Decision("echo", givenMap.getBehind()));
                     //turnDirection is other possible direction (N and S, E and W)
-                    turnDirection = "E";
                     switchStates(state.SEARCHING);
                 }
                 else{
                     //fly until next piece of land - 1 (because it flies first and then scans);
-                    for (int i = 0; i < givenMap.getRange("current") - 1; i++){
+                    for (int i = 0; i < givenMap.getRange("current")+1; i++){
                         decQueue.add(new Decision("fly"));
                     }
+                    decQueue.add(new Decision("scan"));
                     switchStates(state.SEARCHING);
                 }
                 break;
