@@ -123,6 +123,9 @@ public class Map {
     public void setDroneStartingTurn(String dir){
         ourDrone.setStartingTurn(dir);
     }
+    public String getStartingTurn(){
+        return ourDrone.starting_turn;
+    }
 
     public String getBehind() {
         return ourDrone.behind.toString();
@@ -131,6 +134,9 @@ public class Map {
     public void isOcean(JSONArray biomes) {
         if (biomes.length()==1 && biomes.getString(0).equals("OCEAN")){
             overOcean = true;
+        }
+        else{
+            overOcean = false;
         }
     }
 }
