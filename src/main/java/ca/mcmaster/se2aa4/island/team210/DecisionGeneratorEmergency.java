@@ -4,10 +4,11 @@ import java.util.*;
 
 public class DecisionGeneratorEmergency implements DecisionGenerator {
 
-
+    private int counter;
     enum state{
         SEARCHING,
         TURNING,
+        CHECK,
         DONE
     }
 
@@ -32,12 +33,14 @@ public class DecisionGeneratorEmergency implements DecisionGenerator {
             case TURNING:
                 canSwitchStates(givenMap);
                 break;
+            case CHECK:
+                canSwitchStates(givenMap);
         }
         return decQueue.remove();
     }
 
     private void canSwitchStates(Map givenMap) {
-        if(givenMap.ourDrone.battery<4000){
+        if(givenMap.ourDrone.battery<100){
             decQueue.add(new Decision("stop"));
         }
         switch (current_state){
@@ -64,7 +67,7 @@ public class DecisionGeneratorEmergency implements DecisionGenerator {
                     decQueue.add(new Decision("scan"));
                     decQueue.add(new Decision("echo", givenMap.getBehind()));
                     //turnDirection is other possible direction (N and S, E and W)
-                    switchStates(state.SEARCHING);
+                    switchStates(state.CHECK);
                 }
                 else{
                     //fly until next piece of land - 1 (because it flies first and then scans);
@@ -72,8 +75,37 @@ public class DecisionGeneratorEmergency implements DecisionGenerator {
                         decQueue.add(new Decision("fly"));
                     }
                     decQueue.add(new Decision("scan"));
-                    switchStates(state.SEARCHING);
+                    switchStates(state.CHECK);
                 }
+                break;
+            case CHECK:
+                if(counter<2) {
+                    if (givenMap.getEchoType("current").equals("OUT_OF_RANGE")) {
+                        counter++;
+                        if (givenMap.getStartingTurn().equals("left")) {
+                            decQueue.add(new Decision("heading", givenMap.getRight()));
+                            decQueue.add(new Decision("heading", givenMap.getBehind()));
+                            decQueue.add(new Decision("heading", givenMap.getLeft()));
+                            decQueue.add(new Decision("fly"));
+                            decQueue.add(new Decision("heading", givenMap.getDirection()));
+                            givenMap.setDroneStartingTurn("right");
+                        } else {
+                            decQueue.add(new Decision("heading", givenMap.getLeft()));
+                            decQueue.add(new Decision("heading", givenMap.getBehind()));
+                            decQueue.add(new Decision("heading", givenMap.getRight()));
+                            decQueue.add(new Decision("fly"));
+                            decQueue.add(new Decision("heading", givenMap.getDirection()));
+                            givenMap.setDroneStartingTurn("left");
+                        }
+                    }
+                    else{
+                        decQueue.add(new Decision("scan"));
+                    }
+                }
+                else{
+                    decQueue.add(new Decision("stop"));
+                }
+                switchStates(state.SEARCHING);
                 break;
             case DONE:
                 break;
