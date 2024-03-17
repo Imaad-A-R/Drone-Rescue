@@ -45,6 +45,9 @@ public class Drone {
         }
     }
     public void handleDirection(String newDir){
+        if(current_direction!=null) {
+            move();
+        }
         switch (newDir){
             case "E":
                 current_direction = direction.E;
@@ -71,6 +74,7 @@ public class Drone {
                 behind = direction.E;
                 break;
         }
+        move();
     }
     public String getDirection() { return current_direction.toString(); }
     public Integer[] getCoordinates() {

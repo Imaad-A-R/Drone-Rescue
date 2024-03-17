@@ -52,7 +52,6 @@ public class Map {
                 break;
             case "fly":
                 ourDrone.move();
-
                 break;
             case "echo":
                 last_echo = givenDecision.getExtra();
