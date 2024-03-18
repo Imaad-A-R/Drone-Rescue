@@ -12,8 +12,8 @@ import java.util.List;
 
 public class ScanInfo {
 
-    private static List<POI> creekList = new ArrayList<>();
-    private static POI emergencySite;
+    private List<POI> creekList = new ArrayList<>();
+    private POI emergencySite;
     private final Logger logger = LogManager.getLogger();
 
     public void interpretResults(Integer[] currentCoords, JSONObject extraInfo) {
@@ -35,5 +35,13 @@ public class ScanInfo {
             POI newCreek = new POI(currentCoords, creeks.getString(0));
             creekList.add(newCreek);
         }
+    }
+
+    public List<POI> getCreekList(){
+        return creekList;
+    }
+
+    public POI getEmergencySite(){
+        return emergencySite;
     }
 }

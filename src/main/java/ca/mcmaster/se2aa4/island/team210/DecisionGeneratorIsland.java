@@ -40,11 +40,6 @@ public class DecisionGeneratorIsland implements DecisionGenerator {
                 }
                 else {
                     decQueue.add(new Decision("fly"));
-                /*
-                for (int i = 0; i < 3; i++){
-                    decQueue.add(new Decision("fly"));
-                }
-                */
                     decQueue.add(new Decision("echo", givenMap.getLeft()));
                     decQueue.add(new Decision("echo", givenMap.getRight()));
                 }

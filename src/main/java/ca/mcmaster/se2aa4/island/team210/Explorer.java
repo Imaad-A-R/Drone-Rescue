@@ -20,6 +20,7 @@ public class Explorer implements IExplorerRaid {
     ScanInfo scanInfo = new ScanInfo();
 
 
+
     @Override
     public void initialize(String s) {
         logger.info("** Initializing the Exploration Command Center");
@@ -89,7 +90,10 @@ public class Explorer implements IExplorerRaid {
 
     @Override
     public String deliverFinalReport() {
-        return "no creek found";
+        MapAnalyzer finalResults = new MapAnalyzer(scanInfo);
+        String close = finalResults.findClosestCreek();
+        logger.info(close);
+        return close;
     }
 
 }
