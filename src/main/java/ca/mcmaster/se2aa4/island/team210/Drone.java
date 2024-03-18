@@ -42,6 +42,8 @@ public class Drone {
             case S:
                 y--;
                 break;
+            default:
+                break;
         }
     }
     public void handleDirection(String newDir){

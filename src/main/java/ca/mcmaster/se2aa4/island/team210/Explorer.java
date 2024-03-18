@@ -1,8 +1,6 @@
 package ca.mcmaster.se2aa4.island.team210;
 
 import java.io.StringReader;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,6 +16,7 @@ public class Explorer implements IExplorerRaid {
     Map mapper;
     Navigation decisionMaker = new Navigation();
     ScanInfo scanInfo = new ScanInfo();
+
 
 
 
@@ -59,6 +58,8 @@ public class Explorer implements IExplorerRaid {
                 break;
             case "stop":
                 decision.put("action", "stop");
+                break;
+            default:
                 break;
         }
         logger.info("** Decision: {}",decision.toString());

@@ -83,17 +83,17 @@ public class DecisionGeneratorEmergency implements DecisionGenerator {
                     if (givenMap.getEchoType("current").equals("OUT_OF_RANGE")) {
                         counter++;
                         if (givenMap.getStartingTurn().equals("left")) {
-                            decQueue.add(new Decision("heading", givenMap.getRight()));
-                            decQueue.add(new Decision("heading", givenMap.getBehind()));
                             decQueue.add(new Decision("heading", givenMap.getLeft()));
                             decQueue.add(new Decision("fly"));
+                            decQueue.add(new Decision("heading", givenMap.getBehind()));
+                            decQueue.add(new Decision("heading", givenMap.getRight()));
                             decQueue.add(new Decision("heading", givenMap.getDirection()));
                             givenMap.setDroneStartingTurn("right");
                         } else {
-                            decQueue.add(new Decision("heading", givenMap.getLeft()));
-                            decQueue.add(new Decision("heading", givenMap.getBehind()));
                             decQueue.add(new Decision("heading", givenMap.getRight()));
                             decQueue.add(new Decision("fly"));
+                            decQueue.add(new Decision("heading", givenMap.getBehind()));
+                            decQueue.add(new Decision("heading", givenMap.getLeft()));
                             decQueue.add(new Decision("heading", givenMap.getDirection()));
                             givenMap.setDroneStartingTurn("left");
                         }
