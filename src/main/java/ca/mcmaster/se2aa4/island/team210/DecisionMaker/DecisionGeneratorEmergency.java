@@ -1,4 +1,8 @@
-package ca.mcmaster.se2aa4.island.team210;
+package ca.mcmaster.se2aa4.island.team210.DecisionMaker;
+
+import ca.mcmaster.se2aa4.island.team210.Decision;
+import ca.mcmaster.se2aa4.island.team210.DecisionMaker.DecisionGenerator;
+import ca.mcmaster.se2aa4.island.team210.Map;
 
 import java.util.*;
 
@@ -20,7 +24,7 @@ public class DecisionGeneratorEmergency implements DecisionGenerator {
         decQueue = new LinkedList<>();
         current_state = state.SEARCHING;
     }
-    public Decision decidingAlgorithm(Map givenMap){
+    public Decision decidingAlgorithm(ca.mcmaster.se2aa4.island.team210.Map givenMap){
         if (!decQueue.isEmpty()){
             return decQueue.remove();
         }
@@ -39,8 +43,8 @@ public class DecisionGeneratorEmergency implements DecisionGenerator {
         return decQueue.remove();
     }
 
-    private void canSwitchStates(Map givenMap) {
-        if(givenMap.ourDrone.battery<100){
+    private void canSwitchStates(ca.mcmaster.se2aa4.island.team210.Map givenMap) {
+        if(givenMap.ourDrone.getBattery()<100){
             decQueue.add(new Decision("stop"));
         }
         switch (current_state){
