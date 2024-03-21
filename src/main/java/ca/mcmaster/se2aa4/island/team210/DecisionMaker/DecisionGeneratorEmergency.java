@@ -84,9 +84,11 @@ public class DecisionGeneratorEmergency implements DecisionGenerator {
                 }
                 else{
                     //fly until next piece of land - 1 (because it flies first and then scans);
-                    for (int i = 0; i < givenMap.getRange("current")+1; i++){
+                    for (int i = 0; i < givenMap.getRange("current"); i++){
                         decQueue.add(new Decision("fly"));
                     }
+                    decQueue.add(new Decision("scan"));
+                    decQueue.add(new Decision("fly"));
                     switchStates(state.CHECK);
                 }
                 break;
