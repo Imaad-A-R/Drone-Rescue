@@ -48,12 +48,37 @@ public class DecisionGeneratorEmergency implements DecisionGenerator {
                 if (givenMap.overOcean){
                     decQueue.clear();
                     decQueue.add(new Decision("echo", givenMap.getDirection()));
+                    if (givenMap.getStartingTurn().equals("left")){
+                        decQueue.add(new Decision("echo", givenMap.getRight()));
+                    }
+                    else{
+                        decQueue.add(new Decision("echo", givenMap.getLeft()));
+                    }
                     switchStates(state.TURNING);
                 }
                 break;
             case TURNING:
                 if (givenMap.getEchoType("current").equals("OUT_OF_RANGE")){
+                    if(givenMap.getStartingTurn().equals("left")) {
+                        if (givenMap.getRange("right")<2){
+                            decQueue.add(new Decision("fly"));
+                            decQueue.add(new Decision("echo", givenMap.getRight()));
+                        }
+                        else{
+                            turn(givenMap);
+                        }
+                    }
+                    else{
+                        if (givenMap.getRange("left")<2){
+                            decQueue.add(new Decision("fly"));
+                            decQueue.add(new Decision("echo", givenMap.getLeft()));
+                        }
+                        else{
+                            turn(givenMap);
+                        }
+                    }
                     //turn in correct direction;
+                    /*
                     if (givenMap.getStartingTurn().equals("left")){
                         decQueue.add(new Decision("heading", givenMap.getRight()));
                         givenMap.setDroneStartingTurn("right");
@@ -62,19 +87,18 @@ public class DecisionGeneratorEmergency implements DecisionGenerator {
                         decQueue.add(new Decision("heading", givenMap.getLeft()));
                         givenMap.setDroneStartingTurn("left");
                     }
-
                     decQueue.add(new Decision("heading", givenMap.getBehind()));
                     decQueue.add(new Decision("scan"));
                     decQueue.add(new Decision("echo", givenMap.getBehind()));
                     //turnDirection is other possible direction (N and S, E and W)
                     switchStates(state.CHECK);
+                    */
                 }
                 else{
                     //fly until next piece of land - 1 (because it flies first and then scans);
                     for (int i = 0; i < givenMap.getRange("current")+1; i++){
                         decQueue.add(new Decision("fly"));
                     }
-                    decQueue.add(new Decision("scan"));
                     switchStates(state.CHECK);
                 }
                 break;
@@ -116,6 +140,20 @@ public class DecisionGeneratorEmergency implements DecisionGenerator {
 
     private void switchStates(state s){
         current_state = s;
+    }
+    private void turn(Map givenMap){
+        if (givenMap.getStartingTurn().equals("left")){
+            decQueue.add(new Decision("heading", givenMap.getRight()));
+            givenMap.setDroneStartingTurn("right");
+        }
+        else{
+            decQueue.add(new Decision("heading", givenMap.getLeft()));
+            givenMap.setDroneStartingTurn("left");
+        }
+        decQueue.add(new Decision("heading", givenMap.getBehind()));
+        decQueue.add(new Decision("echo", givenMap.getBehind()));
+        //turnDirection is other possible direction (N and S, E and W)
+        switchStates(state.CHECK);
     }
 
     public String getState(){
