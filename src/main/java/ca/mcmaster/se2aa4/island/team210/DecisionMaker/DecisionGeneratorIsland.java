@@ -1,4 +1,8 @@
-package ca.mcmaster.se2aa4.island.team210;
+package ca.mcmaster.se2aa4.island.team210.DecisionMaker;
+
+import ca.mcmaster.se2aa4.island.team210.Decision;
+import ca.mcmaster.se2aa4.island.team210.DecisionMaker.DecisionGenerator;
+import ca.mcmaster.se2aa4.island.team210.Map;
 
 import java.util.*;
 
@@ -22,7 +26,7 @@ public class DecisionGeneratorIsland implements DecisionGenerator {
     }
 
 
-    public Decision decidingAlgorithm(Map givenMap){
+    public Decision decidingAlgorithm(ca.mcmaster.se2aa4.island.team210.Map givenMap){
         if (!decQueue.isEmpty()){
             return decQueue.remove();
         }

@@ -1,5 +1,9 @@
 package ca.mcmaster.se2aa4.island.team210;
 
+import ca.mcmaster.se2aa4.island.team210.DecisionMaker.DecisionGenerator;
+import ca.mcmaster.se2aa4.island.team210.DecisionMaker.DecisionGeneratorEmergency;
+import ca.mcmaster.se2aa4.island.team210.DecisionMaker.DecisionGeneratorIsland;
+
 public class Navigation {
 
     enum State{

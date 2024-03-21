@@ -19,7 +19,7 @@ public class Map {
 
     private final Logger logger = LogManager.getLogger();
 
-    Drone ourDrone;
+    public Drone ourDrone;
     public Map(Drone drone) {
         ourDrone = drone;
     }
