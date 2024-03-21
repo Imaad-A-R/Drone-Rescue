@@ -77,22 +77,6 @@ public class DecisionGeneratorEmergency implements DecisionGenerator {
                             turn(givenMap);
                         }
                     }
-                    //turn in correct direction;
-                    /*
-                    if (givenMap.getStartingTurn().equals("left")){
-                        decQueue.add(new Decision("heading", givenMap.getRight()));
-                        givenMap.setDroneStartingTurn("right");
-                    }
-                    else{
-                        decQueue.add(new Decision("heading", givenMap.getLeft()));
-                        givenMap.setDroneStartingTurn("left");
-                    }
-                    decQueue.add(new Decision("heading", givenMap.getBehind()));
-                    decQueue.add(new Decision("scan"));
-                    decQueue.add(new Decision("echo", givenMap.getBehind()));
-                    //turnDirection is other possible direction (N and S, E and W)
-                    switchStates(state.CHECK);
-                    */
                 }
                 else{
                     //fly until next piece of land - 1 (because it flies first and then scans);
