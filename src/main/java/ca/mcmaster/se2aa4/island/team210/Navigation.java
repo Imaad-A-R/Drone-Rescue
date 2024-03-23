@@ -12,6 +12,7 @@ public class Navigation {
         DONE
     }
 
+
     State currentState;
     DecisionGenerator findIsland = new DecisionGeneratorIsland();
     DecisionGenerator findEmergency = new DecisionGeneratorEmergency();
@@ -20,17 +21,17 @@ public class Navigation {
         currentState = State.FIND_ISLAND;
     }
 
-    public Decision makeADecision(Map givenMap) {
+    public Decision makeADecision(Map givenMap, Drone givenDrone) {
         Decision decision = new Decision();
         switch (currentState) {
             case FIND_ISLAND:
-                decision = findIsland.decidingAlgorithm(givenMap);
+                decision = findIsland.decidingAlgorithm(givenMap, givenDrone);
                 if (findIsland.getState().equals("DONE")) {
                     moveToNextState();
                 }
                 break;
             case FIND_EMERGENCY:
-                decision = findEmergency.decidingAlgorithm(givenMap);
+                decision = findEmergency.decidingAlgorithm(givenMap, givenDrone);
                 if (findEmergency.getState().equals("DONE")) {
                     moveToNextState();
                 }

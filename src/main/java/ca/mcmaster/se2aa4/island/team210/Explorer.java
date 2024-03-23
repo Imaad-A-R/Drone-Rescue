@@ -14,6 +14,7 @@ public class Explorer implements IExplorerRaid {
     private final Logger logger = LogManager.getLogger();
 
     Map mapper;
+    Drone drone;
     Navigation decisionMaker = new Navigation();
     ScanInfo scanInfo = new ScanInfo();
 
@@ -29,29 +30,30 @@ public class Explorer implements IExplorerRaid {
         Integer batteryLevel = info.getInt("budget");
         logger.info("The drone is facing {}", direction);
         logger.info("Battery level is {}", batteryLevel);
-        mapper = new Map(new Drone(batteryLevel, direction));
+        drone = new Drone(batteryLevel, direction);
+        mapper = new Map();
     }
 
     @Override
     public String takeDecision() {
         JSONObject decision = new JSONObject();
         Decision givenDecision;
-        givenDecision = decisionMaker.makeADecision(mapper);
+        givenDecision = decisionMaker.makeADecision(mapper, drone);
 
         switch(givenDecision.getAction()){
             case "fly":
                 decision.put("action", "fly");
-                mapper.storeDecisionInfo(givenDecision);
+                mapper.storeDecisionInfo(givenDecision, drone);
                 break;
             case "heading":
                 decision.put("action", "heading");
                 decision.put("parameters", (new JSONObject()).put("direction", givenDecision.getExtra()));
-                mapper.storeDecisionInfo(givenDecision);
+                mapper.storeDecisionInfo(givenDecision, drone);
                 break;
             case "echo":
                 decision.put("action", "echo");
                 decision.put("parameters", (new JSONObject()).put("direction", givenDecision.getExtra()));
-                mapper.storeDecisionInfo(givenDecision);
+                mapper.storeDecisionInfo(givenDecision, drone);
                 break;
             case "scan":
                 decision.put("action", "scan");
@@ -72,7 +74,7 @@ public class Explorer implements IExplorerRaid {
         logger.info("** Response received:\n"+response.toString(2));
         Integer cost = response.getInt("cost");
         logger.info("The cost of the action was {}", cost);
-        mapper.applyCost(cost);
+        drone.removeCost(cost);
 
         String status = response.getString("status");
         logger.info("The status of the drone is {}", status);
@@ -81,12 +83,12 @@ public class Explorer implements IExplorerRaid {
         logger.info("Additional information received: {}", extraInfo);
         mapper.interpretResults(extraInfo);
 
-        Integer [] currentCoords = mapper.ourDrone.getCoordinates();
+        Integer [] currentCoords = drone.getCoordinates();
         scanInfo.interpretResults(currentCoords, extraInfo);
         if (extraInfo.has("biomes")){
             mapper.isOcean(extraInfo.getJSONArray("biomes"));
         }
-        logger.info(mapper.ourDrone.getBattery());
+        logger.info(drone.getBattery());
     }
 
     @Override

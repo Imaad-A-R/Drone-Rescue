@@ -21,6 +21,6 @@ public class DroneTest {
     @Test
     public void handleDirectionTest(){
         aDrone.handleDirection("N");
-        assertEquals("N", aDrone.getDirection());
+        assertEquals("N", aDrone.returnDirection("current"));
     }
 }

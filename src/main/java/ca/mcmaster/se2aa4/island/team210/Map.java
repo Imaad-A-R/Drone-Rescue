@@ -5,8 +5,6 @@ import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.util.List;
-
 
 public class Map {
 
@@ -19,10 +17,7 @@ public class Map {
 
     private final Logger logger = LogManager.getLogger();
 
-    public Drone ourDrone;
-    public Map(Drone drone) {
-        ourDrone = drone;
-    }
+    public Map(){}
 
     public void interpretResults(JSONObject info){
         if (info.has("range")){
@@ -45,13 +40,13 @@ public class Map {
         }
     }
 
-    public void storeDecisionInfo(Decision givenDecision) {
+    public void storeDecisionInfo(Decision givenDecision, Drone givenDrone) {
         switch (givenDecision.getAction()){
             case "heading":
-                ourDrone.handleDirection(givenDecision.getExtra());
+                givenDrone.handleDirection(givenDecision.getExtra());
                 break;
             case "fly":
-                ourDrone.move();
+                givenDrone.move();
                 break;
             case "echo":
                 last_echo = givenDecision.getExtra();
@@ -61,8 +56,8 @@ public class Map {
         }
     }
 
-    public Integer getRange(String orientation){
-        String direc = returnDirection(orientation);
+    public Integer getRange(String orientation, Drone givenDrone){
+        String direc = givenDrone.returnDirection(orientation);
         switch (direc){
             case "N":
                 return north.getRange();
@@ -77,8 +72,8 @@ public class Map {
         }
     }
 
-    public String getEchoType(String orientation){
-        String direc = returnDirection(orientation);
+    public String getEchoType(String orientation, Drone givenDrone){
+        String direc = givenDrone.returnDirection(orientation);
         switch (direc){
             case "N":
                 return north.getEchoType();
@@ -91,43 +86,6 @@ public class Map {
             default:
                 return "";
         }
-    }
-
-    public String returnDirection(String orientation){
-        switch (orientation){
-            case "current":
-                return ourDrone.current_direction.toString();
-            case "right":
-                return ourDrone.right.toString();
-            case "left":
-                return ourDrone.left.toString();
-            default:
-                return "";
-        }
-    }
-
-    public void applyCost(Integer cost) {
-        ourDrone.removeCost(cost);
-    }
-
-    public String getDirection() { return ourDrone.getDirection();
-    }
-
-    public String getRight(){
-        return ourDrone.right.toString();
-    }
-    public String getLeft(){
-        return ourDrone.left.toString();
-    }
-    public void setDroneStartingTurn(String dir){
-        ourDrone.setStartingTurn(dir);
-    }
-    public String getStartingTurn(){
-        return ourDrone.starting_turn;
-    }
-
-    public String getBehind() {
-        return ourDrone.behind.toString();
     }
 
     public void isOcean(JSONArray biomes) {
