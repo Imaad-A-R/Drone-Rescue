@@ -78,7 +78,22 @@ public class Drone {
         }
         move();
     }
-    public String getDirection() { return current_direction.toString(); }
+
+    public String returnDirection(String orientation){
+        switch (orientation){
+            case "current":
+                return current_direction.toString();
+            case "right":
+                return right.toString();
+            case "left":
+                return left.toString();
+            case "behind":
+                return behind.toString();
+            default:
+                return "";
+        }
+    }
+
     public Integer[] getCoordinates() {
         Integer [] Coords = new Integer[2];
         Coords[0]=x;
@@ -90,5 +105,8 @@ public class Drone {
     }
     public void setStartingTurn(String dir){
         starting_turn = dir;
+    }
+    public String getStartingTurn(){
+        return starting_turn;
     }
 }
