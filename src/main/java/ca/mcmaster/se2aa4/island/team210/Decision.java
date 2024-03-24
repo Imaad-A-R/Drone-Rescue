@@ -20,14 +20,6 @@ public class Decision {
         extra = extraInfo;
     }
 
-    public void setAction(String givenAction) {
-        action = givenAction;
-    }
-
-    public void setExtra(String givenExtra){
-        extra = givenExtra;
-    }
-
     public String getAction(){
         return action;
     }
