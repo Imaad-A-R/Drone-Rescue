@@ -1,6 +1,5 @@
 package ca.mcmaster.se2aa4.island.team210;
 
-import java.util.List;
 
 public class POI {
     public Integer xCoord;
