@@ -17,7 +17,7 @@ public class DecisionGeneratorIsland implements DecisionGenerator {
         DONE,
     }
     private state current_state;
-
+    private final String right = "right";
     Queue<Decision> decQueue;
 
     public DecisionGeneratorIsland(){
@@ -34,7 +34,7 @@ public class DecisionGeneratorIsland implements DecisionGenerator {
         switch (current_state){
             case START:
                 decQueue.add(new Decision("echo", givenDrone.returnDirection("current")));
-                decQueue.add(new Decision("echo", givenDrone.returnDirection("right")));
+                decQueue.add(new Decision("echo", givenDrone.returnDirection(right)));
                 decQueue.add(new Decision("echo", givenDrone.returnDirection("left")));
                 canSwitchStates(givenMap, givenDrone);
                 break;
@@ -46,7 +46,7 @@ public class DecisionGeneratorIsland implements DecisionGenerator {
                 else {
                     decQueue.add(new Decision("fly"));
                     decQueue.add(new Decision("echo", givenDrone.returnDirection("left")));
-                    decQueue.add(new Decision("echo", givenDrone.returnDirection("right")));
+                    decQueue.add(new Decision("echo", givenDrone.returnDirection(right)));
                 }
                 break;
             case NAVIGATE:
@@ -58,11 +58,11 @@ public class DecisionGeneratorIsland implements DecisionGenerator {
                         decQueue.add(new Decision("fly"));
                     }
                 }
-                else if (givenMap.getEchoType("right", givenDrone).equals("GROUND")){
-                    decQueue.add(new Decision("heading", givenDrone.returnDirection("right")));
-                    givenDrone.setStartingTurn("right");
+                else if (givenMap.getEchoType(right, givenDrone).equals("GROUND")){
+                    decQueue.add(new Decision("heading", givenDrone.returnDirection(right)));
+                    givenDrone.setStartingTurn(right);
 
-                    for (int i = 0; i < givenMap.getRange("right", givenDrone) - 1; i++){
+                    for (int i = 0; i < givenMap.getRange(right, givenDrone) - 1; i++){
                         decQueue.add(new Decision("fly"));
                     }
                 }
@@ -81,6 +81,8 @@ public class DecisionGeneratorIsland implements DecisionGenerator {
                 break;
             case DONE:
                 break;
+            default:
+                break;
         }
         return decQueue.remove();
 
@@ -92,7 +94,7 @@ public class DecisionGeneratorIsland implements DecisionGenerator {
                 if (givenMap.getEchoType("current", givenDrone).equals("OUT_OF_RANGE")) {
                     switchStates(state.NAVIGATE);
                 }
-                else if (givenMap.getEchoType("right", givenDrone).equals("OUT_OF_RANGE")) {
+                else if (givenMap.getEchoType(right, givenDrone).equals("OUT_OF_RANGE")) {
                     switchStates(state.NAVIGATE);
                 }
                 else if (givenMap.getEchoType("left", givenDrone).equals("OUT_OF_RANGE")) {
@@ -103,7 +105,7 @@ public class DecisionGeneratorIsland implements DecisionGenerator {
                 }
                 break;
             case SEARCH:
-                if (!givenMap.getEchoType("right", givenDrone).equals("OUT_OF_RANGE")) {
+                if (!givenMap.getEchoType(right, givenDrone).equals("OUT_OF_RANGE")) {
                     switchStates(state.NAVIGATE);
                     decQueue.clear();
                 }
