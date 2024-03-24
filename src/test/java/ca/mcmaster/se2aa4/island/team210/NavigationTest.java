@@ -10,7 +10,7 @@ class NavigationTest {
     private Map m = new Map();
     private Drone d = new Drone(7000, "E");
     @Test
-    public void makeADecisionFindIslandTest(){
+    public void testMakeADecisionFindIsland(){
         Decision test_decision = navigator.makeADecision(m, d);
         assertEquals("echo", test_decision.getAction());
     }
