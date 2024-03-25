@@ -11,7 +11,7 @@ class NavigationTest {
     private Navigation navigator = new Navigation(m, d);
     @Test
     public void testMakeADecisionFindIsland(){
-        Decision test_decision = navigator.makeADecision(m, d);
+        Decision test_decision = navigator.makeADecision();
         assertEquals("echo", test_decision.getAction());
     }
 }

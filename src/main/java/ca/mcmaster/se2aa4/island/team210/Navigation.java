@@ -23,7 +23,7 @@ public class Navigation {
         findEmergency = new DecisionGeneratorEmergency(map, drone);
     }
 
-    public Decision makeADecision(Map givenMap, Drone givenDrone) {
+    public Decision makeADecision() {
         Decision decision = new Decision();
         switch (currentState) {
             case FIND_ISLAND:
