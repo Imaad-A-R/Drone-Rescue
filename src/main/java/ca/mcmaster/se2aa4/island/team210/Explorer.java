@@ -39,7 +39,7 @@ public class Explorer implements IExplorerRaid {
     public String takeDecision() {
         JSONObject decision = new JSONObject();
         Decision givenDecision;
-        givenDecision = decisionMaker.makeADecision(mapper, drone);
+        givenDecision = decisionMaker.makeADecision();
 
         switch(givenDecision.getAction()){
             case "fly":

@@ -3,8 +3,6 @@ package ca.mcmaster.se2aa4.island.team210.DecisionMaker;
 import ca.mcmaster.se2aa4.island.team210.Decision;
 import ca.mcmaster.se2aa4.island.team210.Drone;
 import ca.mcmaster.se2aa4.island.team210.Map;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.util.*;
 
@@ -13,7 +11,7 @@ public class DecisionGeneratorEmergency implements DecisionGenerator {
     private int counter;
     private Map givenMap;
     private Drone givenDrone;
-    private final Logger logger = LogManager.getLogger();
+
     enum state{
         SEARCHING,
         TURNING,
@@ -97,7 +95,6 @@ public class DecisionGeneratorEmergency implements DecisionGenerator {
                     }
                 }
                 else{
-                    //fly until next piece of land - 1 (because it flies first and then scans);
                     for (int i = 0; i < givenMap.getRange(current, givenDrone); i++){
                         decQueue.add(new Decision("fly"));
                     }

@@ -31,6 +31,6 @@ public class MapAnalyzer {
     }
 
     private double distanceForm(Integer x, Integer y, Integer emergencyX, Integer emergencyY){
-        return Math.sqrt(Math.abs((Math.pow(x-emergencyX, 2) + Math.pow(y-emergencyY, 2))));
+        return Math.sqrt(Math.abs((Math.pow((double)x-emergencyX, 2) + Math.pow((double)y-emergencyY, 2))));
     }
 }
