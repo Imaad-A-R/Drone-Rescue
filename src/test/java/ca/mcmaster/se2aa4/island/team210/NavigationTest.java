@@ -6,9 +6,9 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class NavigationTest {
-    private Navigation navigator = new Navigation();
     private Map m = new Map();
     private Drone d = new Drone(7000, "E");
+    private Navigation navigator = new Navigation(m, d);
     @Test
     public void testMakeADecisionFindIsland(){
         Decision test_decision = navigator.makeADecision(m, d);
