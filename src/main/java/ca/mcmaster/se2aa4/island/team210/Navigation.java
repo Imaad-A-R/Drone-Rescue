@@ -14,24 +14,26 @@ public class Navigation {
 
 
     State currentState;
-    DecisionGenerator findIsland = new DecisionGeneratorIsland();
-    DecisionGenerator findEmergency = new DecisionGeneratorEmergency();
+    DecisionGenerator findIsland;
+    DecisionGenerator findEmergency;
 
-    Navigation(){
+    Navigation(Map map, Drone drone){
         currentState = State.FIND_ISLAND;
+        findIsland = new DecisionGeneratorIsland(map, drone);
+        findEmergency = new DecisionGeneratorEmergency(map, drone);
     }
 
     public Decision makeADecision(Map givenMap, Drone givenDrone) {
         Decision decision = new Decision();
         switch (currentState) {
             case FIND_ISLAND:
-                decision = findIsland.decidingAlgorithm(givenMap, givenDrone);
+                decision = findIsland.decidingAlgorithm();
                 if (findIsland.getState().equals("DONE")) {
                     moveToNextState();
                 }
                 break;
             case FIND_EMERGENCY:
-                decision = findEmergency.decidingAlgorithm(givenMap, givenDrone);
+                decision = findEmergency.decidingAlgorithm();
                 if (findEmergency.getState().equals("DONE")) {
                     moveToNextState();
                 }

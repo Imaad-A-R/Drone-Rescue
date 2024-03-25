@@ -8,9 +8,9 @@ import java.util.List;
 
 
 public class MapAnalyzer {
-    List<POI> creekList;
+    private List<POI> creekList;
     private final Logger logger = LogManager.getLogger();
-    POI emergency;
+    private POI emergency;
     double closest = 10000;
     public MapAnalyzer(ScanInfo scanInfo) {
         creekList = scanInfo.getCreekList();

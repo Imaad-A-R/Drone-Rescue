@@ -15,18 +15,22 @@ public class DecisionGeneratorIsland implements DecisionGenerator {
         LOOPING,
         DONE,
     }
+    private Map givenMap;
+    private Drone givenDrone;
     private state current_state;
     private final String right = "right";
-    Queue<Decision> decQueue;
+    private Queue<Decision> decQueue;
 
-    public DecisionGeneratorIsland(){
+    public DecisionGeneratorIsland(Map map, Drone drone){
 
         current_state = state.START;
         decQueue = new LinkedList<>();
+        givenMap = map;
+        givenDrone = drone;
     }
 
 
-    public Decision decidingAlgorithm(Map givenMap, Drone givenDrone){
+    public Decision decidingAlgorithm(){
         if (!decQueue.isEmpty()){
             return decQueue.remove();
         }
@@ -35,10 +39,10 @@ public class DecisionGeneratorIsland implements DecisionGenerator {
                 decQueue.add(new Decision("echo", givenDrone.returnDirection("current")));
                 decQueue.add(new Decision("echo", givenDrone.returnDirection(right)));
                 decQueue.add(new Decision("echo", givenDrone.returnDirection("left")));
-                canSwitchStates(givenMap, givenDrone);
+                canSwitchStates();
                 break;
             case SEARCH:
-                canSwitchStates(givenMap, givenDrone);
+                canSwitchStates();
                 if (current_state.equals(state.NAVIGATE)){
                     decQueue.add(new Decision("scan"));
                 }
@@ -72,10 +76,10 @@ public class DecisionGeneratorIsland implements DecisionGenerator {
                 }
 
                 decQueue.add(new Decision("scan"));
-                canSwitchStates(givenMap, givenDrone);
+                canSwitchStates();
                 break;
             case LOOPING:
-                canSwitchStates(givenMap, givenDrone);
+                canSwitchStates();
                 decQueue.add(new Decision("scan"));
                 break;
             case DONE:
@@ -87,7 +91,8 @@ public class DecisionGeneratorIsland implements DecisionGenerator {
 
     }
 
-    private void canSwitchStates(Map givenMap, Drone givenDrone) {
+
+    private void canSwitchStates() {
         switch (current_state){
             case START:
                 if (givenMap.getEchoType("current", givenDrone).equals("OUT_OF_RANGE")) {

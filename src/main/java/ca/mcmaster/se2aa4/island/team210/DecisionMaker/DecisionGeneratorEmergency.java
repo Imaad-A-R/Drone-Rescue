@@ -3,12 +3,17 @@ package ca.mcmaster.se2aa4.island.team210.DecisionMaker;
 import ca.mcmaster.se2aa4.island.team210.Decision;
 import ca.mcmaster.se2aa4.island.team210.Drone;
 import ca.mcmaster.se2aa4.island.team210.Map;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.*;
 
 public class DecisionGeneratorEmergency implements DecisionGenerator {
 
     private int counter;
+    private Map givenMap;
+    private Drone givenDrone;
+    private final Logger logger = LogManager.getLogger();
     enum state{
         SEARCHING,
         TURNING,
@@ -23,11 +28,13 @@ public class DecisionGeneratorEmergency implements DecisionGenerator {
     private final String left = "left";
     private final String heading = "heading";
 
-    public DecisionGeneratorEmergency(){
+    public DecisionGeneratorEmergency(Map map, Drone drone){
         decQueue = new LinkedList<>();
         current_state = state.SEARCHING;
+        givenMap = map;
+        givenDrone = drone;
     }
-    public Decision decidingAlgorithm(Map givenMap, Drone givenDrone){
+    public Decision decidingAlgorithm(){
         if (!decQueue.isEmpty()){
             return decQueue.remove();
         }
@@ -35,13 +42,13 @@ public class DecisionGeneratorEmergency implements DecisionGenerator {
             case SEARCHING:
                 decQueue.add(new Decision("fly"));
                 decQueue.add(new Decision("scan"));
-                canSwitchStates(givenMap, givenDrone);
+                canSwitchStates();
                 break;
             case TURNING:
-                canSwitchStates(givenMap, givenDrone);
+                canSwitchStates();
                 break;
             case CHECK:
-                canSwitchStates(givenMap, givenDrone);
+                canSwitchStates();
             case DONE:
                 break;
             default:
@@ -50,7 +57,7 @@ public class DecisionGeneratorEmergency implements DecisionGenerator {
         return decQueue.remove();
     }
 
-    private void canSwitchStates(Map givenMap, Drone givenDrone) {
+    private void canSwitchStates() {
         if(givenDrone.getBattery()<100){
             decQueue.add(new Decision("stop"));
         }

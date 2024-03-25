@@ -15,7 +15,7 @@ public class Explorer implements IExplorerRaid {
 
     Map mapper;
     Drone drone;
-    Navigation decisionMaker = new Navigation();
+    Navigation decisionMaker;
     ScanInfo scanInfo = new ScanInfo();
 
 
@@ -32,6 +32,7 @@ public class Explorer implements IExplorerRaid {
         logger.info("Battery level is {}", batteryLevel);
         drone = new Drone(batteryLevel, direction);
         mapper = new Map();
+        decisionMaker = new Navigation(mapper, drone);
     }
 
     @Override
