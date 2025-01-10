@@ -1,4 +1,4 @@
-# [A2] Island ca.mcmaster.se2aa4.island.team210.Explorer
+# Island Explorer
 
 - Authors:
   - [Imaad, Abdul-Razzak](abdulrai@mcmaster.ca) 
